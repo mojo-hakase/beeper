@@ -42,14 +42,15 @@ int main () {
 	while (1) {
 		sf::sleep(sf::milliseconds(50));
 		for (auto& ks : keyStates) {
-			if (sf::Keyboard::isKeyPressed(ks.keyCode) != ks.wasPressed) {
-				if (sf::Keyboard::isKeyPressed(ks.keyCode)) {
+			auto curState = sf::Keyboard::isKeyPressed(ks.keyCode);
+			if (curState != ks.wasPressed) {
+				if (curState ) {
 					ks.sound.setPitch(1+20.f*static_cast<float>(ks.keyCode)/sf::Keyboard::KeyCount);
 					ks.sound.play();
 				} else {
 					ks.sound.stop();
 				}
-				ks.wasPressed = sf::Keyboard::isKeyPressed(ks.keyCode);
+				ks.wasPressed = curState;
 			}
 		}
 	}
